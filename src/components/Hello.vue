@@ -3,16 +3,24 @@
   <div>
 
     <div v-if="model.name" style="background-color: #ccc;">
-      <div class="itemRow" :style="{ marginLeft:model.level*20+'px' }">
+
+      <!--使用draggable组件-->
+      <draggable v-model="myArray" :options="{group:'people'}" @start="drag" @end="drop" :move="checkMove">
+        <!--<div v-for="element in myArray">{{element.name}}</div>-->
+
+
+        <div class="itemRow" :style="{ marginLeft:model.level*20+'px' }">
         <span v-show="model.children.length" style="color: blue;cursor: pointer;"
               @click="expandOrCollapse">{{model.isOpen ? '-' : '+'}}</span>
-        <span>{{model.name}}</span>
-        <span class="addNode" @click="add">添加</span>
-        <span class="removeNode" @click="remove(model)">删除</span>
-        <span class="updateNode" @click="edit">修改</span>
-        <span class="asce" v-show="model.children.length" @click="orderAsce">↑</span>
-        <span class="desc" v-show="model.children.length" @click="orderDesc">↓</span>
-      </div>
+          <span>{{model.name}}</span>
+          <span class="addNode" @click="add">添加</span>
+          <span class="removeNode" @click="remove(model)">删除</span>
+          <span class="updateNode" @click="edit">修改</span>
+          <span class="asce" v-show="model.children.length" @click="orderAsce">↑</span>
+          <span class="desc" v-show="model.children.length" @click="orderDesc">↓</span>
+        </div>
+
+      </draggable>
 
     </div>
 
@@ -23,7 +31,17 @@
 </template>
 
 <script>
+
+  // 导入vuedraggable插件
+  import draggable from 'vuedraggable';
+
   export default {
+
+    components: {
+      // 声明draggable组件
+      draggable
+    },
+
     name: 'hello',
 
 
@@ -180,6 +198,9 @@
 
   .itemRow {
     text-align: left;
+    margin-top: 10px
+    margin-bottom: 10px
+    background-color: navajowhite
   }
 
 
