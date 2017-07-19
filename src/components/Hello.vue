@@ -8,17 +8,40 @@
       <draggable v-model="myArray" :options="{group:'people'}" @start="drag" @end="drop" :move="checkMove">
         <!--<div v-for="element in myArray">{{element.name}}</div>-->
 
+        <!--有子节点的时候作为一个整体-->
+        <div class="onHome" v-if="model.children.length != 0" style="background-color: rebeccapurple;">
 
-        <div class="itemRow" :style="{ marginLeft:model.level*20+'px' }">
-        <span v-show="model.children.length" style="color: blue;cursor: pointer;"
-              @click="expandOrCollapse">{{model.isOpen ? '-' : '+'}}</span>
-          <span>{{model.name}}</span>
-          <span class="addNode" @click="add">添加</span>
-          <span class="removeNode" @click="remove(model)">删除</span>
-          <span class="updateNode" @click="edit">修改</span>
-          <span class="asce" v-show="model.children.length" @click="orderAsce">↑</span>
-          <span class="desc" v-show="model.children.length" @click="orderDesc">↓</span>
+          <div class="itemRow" :style="{ marginLeft:model.level*20+'px' }">
+            <span></span>
+            <span v-show="model.children.length" style="color: blue;cursor: pointer;"
+                  @click="expandOrCollapse">{{model.isOpen ? '-' : '+'}}</span>
+            <span>{{model.name}}</span>
+            <span class="addNode" @click="add">添加</span>
+            <span class="removeNode" @click="remove(model)">删除</span>
+            <span class="updateNode" @click="edit">修改</span>
+            <span class="asce" v-show="model.children.length" @click="orderAsce">↑</span>
+            <span class="desc" v-show="model.children.length" @click="orderDesc">↓</span>
+          </div>
+
         </div>
+
+
+        <!--没有子组件的时候作为单独的-->
+        <div class="onHome" v-if="model.children.length == 0" style="background-color: orchid;">
+
+          <div class="itemRow" :style="{ marginLeft:model.level*20+'px' }">
+            <span v-show="model.children.length" style="color: blue;cursor: pointer;"
+                  @click="expandOrCollapse">{{model.isOpen ? '-' : '+'}}</span>
+            <span>{{model.name}}</span>
+            <span class="addNode" @click="add">添加</span>
+            <span class="removeNode" @click="remove(model)">删除</span>
+            <span class="updateNode" @click="edit">修改</span>
+            <span class="asce" v-show="model.children.length" @click="orderAsce">↑</span>
+            <span class="desc" v-show="model.children.length" @click="orderDesc">↓</span>
+          </div>
+
+        </div>
+
 
       </draggable>
 
